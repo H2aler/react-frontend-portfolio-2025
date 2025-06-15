@@ -127,10 +127,10 @@ const Footer: React.FC = () => {
     {
       title: '바로가기',
       links: [
-        { label: '홈', href: '/', icon: '🏠' },
-        { label: '소개', href: '/about', icon: '👋' },
-        { label: '프로젝트', href: '/projects', icon: '💻' },
-        { label: '연락처', href: '/contact', icon: '📝' }
+        { label: '홈', href: '/react-frontend-portfolio-2025/', icon: '🏠' },
+        { label: '소개', href: '/react-frontend-portfolio-2025/about', icon: '👋' },
+        { label: '프로젝트', href: '/react-frontend-portfolio-2025/projects', icon: '💻' },
+        { label: '연락처', href: '/react-frontend-portfolio-2025/contact', icon: '📝' }
       ]
     }
   ];

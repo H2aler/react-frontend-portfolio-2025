@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
@@ -382,20 +381,6 @@ const TimelineDescription = styled(motion.p)`
 `;
 
 const About = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const floatingElements = [
     { size: 200, color: '#FF6B6B', x: 10, y: 20 },
     { size: 150, color: '#4ECDC4', x: 80, y: 60 },
