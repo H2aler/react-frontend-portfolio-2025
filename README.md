@@ -122,3 +122,25 @@ git push -u origin main
 
 - 원격 저장소 주소: https://github.com/H2aler/react-frontend-portfolio-2025
 - 자세한 내용은 [GitHub 공식 문서](https://docs.github.com/ko/get-started/quickstart/create-a-repo) 참고
+
+## 배포 환경에서의 라우팅 안내
+- **개발 서버(localhost)**에서는 `/`, `/about`, `/projects`, `/contact`와 같이 동작합니다.
+- **GitHub Pages** 등 정적 호스팅 환경에서는 반드시 hash router(`/#/경로`)를 사용해야 정상적으로 이동합니다.
+    - 홈: `https://h2aler.github.io/react-frontend-portfolio-2025/#/`
+    - 소개: `https://h2aler.github.io/react-frontend-portfolio-2025/#/about`
+    - 프로젝트: `https://h2aler.github.io/react-frontend-portfolio-2025/#/projects`
+    - 연락처: `https://h2aler.github.io/react-frontend-portfolio-2025/#/contact`
+- Footer의 바로가기 메뉴 역시 위와 같은 hash router 주소로 연결되어 있습니다.
+- **Vercel, Netlify** 등에서는 HashRouter가 필요 없으며, 일반적인 SPA 라우팅(`/about` 등)으로 동작합니다.
+
+## HashRouter 사용 시 주의사항
+- GitHub Pages 등에서는 `BrowserRouter` 대신 반드시 `HashRouter`를 사용해야 새로고침/직접접속 시 404 오류가 발생하지 않습니다.
+- 라우터 설정은 `src/main.tsx` 또는 `src/App.tsx`에서 확인 및 변경할 수 있습니다.
+
+## Footer 바로가기 메뉴 커스터마이징
+- Footer의 바로가기 메뉴 주소를 변경하려면 `src/components/Footer.tsx`의 `links` 배열을 수정하세요.
+- GitHub Pages 배포 시에는 반드시 `/react-frontend-portfolio-2025/#/경로` 형태로 작성해야 합니다.
+
+## 환경 변수 및 설정
+- 필요에 따라 `PUBLIC_URL` 등 환경 변수를 설정할 수 있습니다. (Vite, CRA 등 환경에 따라 다름)
+- favicon, og:image 등은 `src/assets/` 또는 `public/` 폴더에서 교체 가능합니다.
