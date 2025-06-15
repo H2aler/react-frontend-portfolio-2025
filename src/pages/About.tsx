@@ -35,7 +35,7 @@ const FloatingElements = styled.div`
   z-index: 0;
 `;
 
-const FloatingElement = styled(motion.create('div'))<{ size: number; color: string }>`
+const FloatingElement = styled(motion.div)<{ size: number; color: string }>`
   position: absolute;
   width: ${props => props.size}px;
   height: ${props => props.size}px;
@@ -43,12 +43,6 @@ const FloatingElement = styled(motion.create('div'))<{ size: number; color: stri
   border-radius: 50%;
   filter: blur(40px);
   opacity: 0.15;
-  transition: {
-    duration: 4,
-    repeat: Infinity,
-    delay: index * 0.3,
-    ease: "easeInOut"
-  }
 `;
 
 const ContentWrapper = styled.div`
@@ -58,7 +52,7 @@ const ContentWrapper = styled.div`
   z-index: 1;
 `;
 
-const Section = styled(motion.create('section'))`
+const Section = styled(motion.section)`
   background: rgba(255, 255, 255, 0.9);
   border-radius: 1.5rem;
   padding: 2.5rem;
@@ -92,7 +86,7 @@ const Section = styled(motion.create('section'))`
   }
 `;
 
-const Title = styled(motion.create('h2'))`
+const Title = styled(motion.h2)`
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 2rem;
@@ -122,7 +116,7 @@ const Title = styled(motion.create('h2'))`
   }
 `;
 
-const Text = styled(motion.create('p'))`
+const Text = styled(motion.p)`
   font-size: 1.2rem;
   line-height: 1.8;
   color: var(--text-secondary);
@@ -137,7 +131,7 @@ const SkillsContainer = styled.div`
   margin-top: 2.5rem;
 `;
 
-const Skill = styled(motion.create('div'))`
+const Skill = styled(motion.div)`
   background: rgba(255, 255, 255, 0.8);
   padding: 2rem;
   border-radius: 1rem;
@@ -152,7 +146,7 @@ const Skill = styled(motion.create('div'))`
   }
 `;
 
-const SkillTitle = styled(motion.create('h4'))`
+const SkillTitle = styled(motion.h4)`
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -182,7 +176,7 @@ const SkillList = styled.ul`
   z-index: 1;
 `;
 
-const SkillItem = styled(motion.create('li'))`
+const SkillItem = styled(motion.li)`
   font-size: 1.1rem;
   color: var(--text-secondary);
   display: flex;
@@ -226,7 +220,7 @@ const Timeline = styled.div`
   }
 `;
 
-const TimelineItem = styled(motion.create('div'))`
+const TimelineItem = styled(motion.div)`
   position: relative;
   margin-bottom: 3rem;
   padding: 1.5rem;
@@ -307,7 +301,7 @@ const TimelineItem = styled(motion.create('div'))`
   }
 `;
 
-const TimelineDate = styled(motion.create('div'))`
+const TimelineDate = styled(motion.div)`
   font-size: 1rem;
   color: var(--accent-color);
   font-weight: 700;
@@ -327,7 +321,7 @@ const TimelineDate = styled(motion.create('div'))`
   }
 `;
 
-const TimelineTitle = styled(motion.create('h4'))`
+const TimelineTitle = styled(motion.h4)`
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -355,7 +349,7 @@ const TimelineTitle = styled(motion.create('h4'))`
   }
 `;
 
-const TimelineDescription = styled(motion.create('p'))`
+const TimelineDescription = styled(motion.p)`
   font-size: 1.1rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -393,8 +387,8 @@ const About = () => {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight
+        x: e.clientX,
+        y: e.clientY
       });
     };
 
@@ -402,152 +396,128 @@ const About = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.05
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 25,
-        duration: 0.2
-      }
-    }
-  };
+  const floatingElements = [
+    { size: 200, color: '#FF6B6B', x: 10, y: 20 },
+    { size: 150, color: '#4ECDC4', x: 80, y: 60 },
+    { size: 180, color: '#45B7D1', x: 40, y: 80 }
+  ];
 
   return (
     <AboutContainer>
       <FloatingElements>
-        <FloatingElement
-          size={300}
-          color="var(--accent-color)"
-          animate={{
-            x: mousePosition.x * 50,
-            y: mousePosition.y * 50,
-          }}
-          transition={{ type: "spring", stiffness: 100 }}
-        />
-        <FloatingElement
-          size={200}
-          color="var(--primary-color)"
-          animate={{
-            x: -mousePosition.x * 30,
-            y: -mousePosition.y * 30,
-          }}
-          transition={{ type: "spring", stiffness: 100 }}
-        />
+        {floatingElements.map((element, index) => (
+          <FloatingElement
+            key={index}
+            size={element.size}
+            color={element.color}
+            animate={{
+              x: [element.x, element.x + 20, element.x],
+              y: [element.y, element.y + 20, element.y],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              delay: index * 0.3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </FloatingElements>
       <ContentWrapper>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+        <Section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <Section>
-            <Title variants={itemVariants}>About Me</Title>
-            <Text variants={itemVariants}>
-              안녕하세요! 저는 사용자 경험을 중요시하는 프론트엔드 개발자입니다.
-              웹 개발에 대한 열정과 창의적인 문제 해결 능력을 바탕으로
-              사용자 친화적인 웹 애플리케이션을 개발하고 있습니다.
-            </Text>
-            <Text variants={itemVariants}>
-              새로운 기술을 배우고 적용하는 것을 좋아하며,
-              지속적인 성장과 발전을 추구합니다.
-              팀 협업을 통해 더 나은 결과물을 만들어내는 것을 즐깁니다.
-            </Text>
-          </Section>
+          <Title>About Me</Title>
+          <Text>
+            안녕하세요! 저는 프론트엔드 개발자입니다. 사용자 경험을 중요시하며,
+            최신 웹 기술을 활용하여 아름답고 기능적인 웹 애플리케이션을 만드는 것을 좋아합니다.
+          </Text>
+        </Section>
 
-          <Section>
-            <Title variants={itemVariants}>Skills</Title>
-            <SkillsContainer>
-              <Skill variants={itemVariants}>
-                <SkillTitle>Frontend</SkillTitle>
-                <SkillList>
-                  <SkillItem>React</SkillItem>
-                  <SkillItem>TypeScript</SkillItem>
-                  <SkillItem>HTML5/CSS3</SkillItem>
-                  <SkillItem>JavaScript (ES6+)</SkillItem>
-                </SkillList>
-              </Skill>
-              <Skill variants={itemVariants}>
-                <SkillTitle>Styling</SkillTitle>
-                <SkillList>
-                  <SkillItem>Styled Components</SkillItem>
-                  <SkillItem>Emotion</SkillItem>
-                  <SkillItem>Tailwind CSS</SkillItem>
-                  <SkillItem>SASS/SCSS</SkillItem>
-                </SkillList>
-              </Skill>
-              <Skill variants={itemVariants}>
-                <SkillTitle>Tools & Others</SkillTitle>
-                <SkillList>
-                  <SkillItem>Git</SkillItem>
-                  <SkillItem>Webpack</SkillItem>
-                  <SkillItem>Vite</SkillItem>
-                  <SkillItem>Jest</SkillItem>
-                </SkillList>
-              </Skill>
-            </SkillsContainer>
-          </Section>
+        <Section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Title>Skills</Title>
+          <SkillsContainer>
+            <Skill>
+              <SkillTitle>Frontend</SkillTitle>
+              <SkillList>
+                <SkillItem>React</SkillItem>
+                <SkillItem>TypeScript</SkillItem>
+                <SkillItem>HTML5/CSS3</SkillItem>
+                <SkillItem>JavaScript (ES6+)</SkillItem>
+              </SkillList>
+            </Skill>
+            <Skill>
+              <SkillTitle>Styling</SkillTitle>
+              <SkillList>
+                <SkillItem>Styled Components</SkillItem>
+                <SkillItem>Emotion</SkillItem>
+                <SkillItem>Tailwind CSS</SkillItem>
+                <SkillItem>SASS/SCSS</SkillItem>
+              </SkillList>
+            </Skill>
+            <Skill>
+              <SkillTitle>Tools & Others</SkillTitle>
+              <SkillList>
+                <SkillItem>Git</SkillItem>
+                <SkillItem>Webpack</SkillItem>
+                <SkillItem>Vite</SkillItem>
+                <SkillItem>Jest</SkillItem>
+              </SkillList>
+            </Skill>
+          </SkillsContainer>
+        </Section>
 
-          <Section>
-            <Title variants={itemVariants}>Education & Experience</Title>
-            <Timeline>
-              <TimelineItem
-                variants={itemVariants}
-                whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
-              >
-                <TimelineDate>2024년 09월 01일 - 재직중</TimelineDate>
-                <TimelineTitle>한불 언어마을</TimelineTitle>
-                <TimelineDescription>웹 개발 및 유지보수</TimelineDescription>
-                <TimelineDescription>번역 업무와 웹 개발, 유지보수</TimelineDescription>
-                <TimelineDescription>반응형 웹 제작 및 관리</TimelineDescription>
-              </TimelineItem>
+        <Section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Title>Education & Experience</Title>
+          <Timeline>
+            <TimelineItem
+              whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
+            >
+              <TimelineDate>2024년 09월 01일 - 재직중</TimelineDate>
+              <TimelineTitle>한불 언어마을</TimelineTitle>
+              <TimelineDescription>웹 개발 및 유지보수</TimelineDescription>
+              <TimelineDescription>번역 업무와 웹 개발, 유지보수</TimelineDescription>
+              <TimelineDescription>반응형 웹 제작 및 관리</TimelineDescription>
+            </TimelineItem>
 
-              <TimelineItem
-                variants={itemVariants}
-                whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
-              >
-                <TimelineDate>2023년 4월 - 10월</TimelineDate>
-                <TimelineTitle>세아상역(주)</TimelineTitle>
-                <TimelineDescription>인턴: 김재현</TimelineDescription>
-                <TimelineDescription>MS RPA 개발 및 유지보수</TimelineDescription>
-              </TimelineItem>
+            <TimelineItem
+              whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
+            >
+              <TimelineDate>2023년 4월 - 10월</TimelineDate>
+              <TimelineTitle>세아상역(주)</TimelineTitle>
+              <TimelineDescription>인턴: 김재현</TimelineDescription>
+              <TimelineDescription>MS RPA 개발 및 유지보수</TimelineDescription>
+            </TimelineItem>
 
-              <TimelineItem
-                variants={itemVariants}
-                whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
-              >
-                <TimelineDate>2020 - 2023</TimelineDate>
-                <TimelineTitle>프랑스 라로셸 대학교 공과대학</TimelineTitle>
-                <TimelineDescription>전공: 컴퓨터공학</TimelineDescription>
-                <TimelineDescription>부전공: 마케팅, 매니지먼트</TimelineDescription>
-              </TimelineItem>
+            <TimelineItem
+              whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
+            >
+              <TimelineDate>2020 - 2023</TimelineDate>
+              <TimelineTitle>프랑스 라로셸 대학교 공과대학</TimelineTitle>
+              <TimelineDescription>전공: 컴퓨터공학</TimelineDescription>
+              <TimelineDescription>부전공: 마케팅, 매니지먼트</TimelineDescription>
+            </TimelineItem>
 
-              <TimelineItem
-                variants={itemVariants}
-                whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
-              >
-                <TimelineDate>2017 - 2020</TimelineDate>
-                <TimelineTitle>Fénelon/Vieljeux 고등학교</TimelineTitle>
-                <TimelineDescription>전공: 이과 특별전공 - 엔지니어링</TimelineDescription>
-                <TimelineDescription>(전기, 물리, Solid Works)</TimelineDescription>
-              </TimelineItem>
-            </Timeline>
-          </Section>
-        </motion.div>
+            <TimelineItem
+              whileHover={{ x: 5, scale: 1.02, rotateY: 2 }}
+            >
+              <TimelineDate>2017 - 2020</TimelineDate>
+              <TimelineTitle>Fénelon/Vieljeux 고등학교</TimelineTitle>
+              <TimelineDescription>전공: 이과 특별전공 - 엔지니어링</TimelineDescription>
+              <TimelineDescription>(전기, 물리, Solid Works)</TimelineDescription>
+            </TimelineItem>
+          </Timeline>
+        </Section>
       </ContentWrapper>
     </AboutContainer>
   );
