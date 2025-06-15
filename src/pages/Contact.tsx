@@ -264,20 +264,6 @@ const SuccessMessage = styled(motion.div)`
   border: 1px solid rgba(255, 255, 255, 0.2);
 `;
 
-const ErrorMessage = styled(motion.div)`
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  background: #ff4d4d;
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-`;
-
 const LoadingOverlay = styled(motion.div)`
   position: fixed;
   top: 0;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
@@ -120,17 +120,6 @@ const Title = styled(motion.create('h2'))`
     background: linear-gradient(90deg, var(--accent-color), transparent);
     border-radius: 2px;
   }
-`;
-
-const Subtitle = styled(motion.create('h3'))`
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: var(--text-primary);
-  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Text = styled(motion.create('p'))`

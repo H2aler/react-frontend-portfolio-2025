@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -281,7 +281,7 @@ const Navbar = () => {
       <NavContent>
         <Logo to="/">Portfolio</Logo>
         <NavLinks>
-          {navLinks.map(link => (
+          {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
@@ -310,7 +310,7 @@ const Navbar = () => {
             animate="open"
             exit="closed"
           >
-            {navLinks.map((link, index) => (
+            {navLinks.map((link) => (
               <MobileNavLink
                 key={link.path}
                 to={link.path}
